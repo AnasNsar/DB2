@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #0066cc;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.query-box {
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.query-box pre {
+  font-size: 14px;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.query-box .result {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #008000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+.example {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+table {
+  margin-top: 20px;
+}
+.green {
+    color:#30cc35;
+}
+.red {
+    color: #dd3232;
+}
+    </style>
+</head>
+<body>
+    <h1> الاستعلام الفرعي اي ان يكون الاستعلام هو شرط لاستعلام ثاني اكبر </h1>
+    <h2> الاستعلام باللون الأحمر هو استعلام رئيسي بينما الاستعلام باللون الأخضر هو الفرعي</h2>
+    <div class="container">
+        <div class="query-box">
+          <p>استرجاع أسماء الموظفين الذين رواتبهم أعلى من المتوسط:</p>
+          <pre>
+          <span class="red"> SELECT first_name, last_name
+             FROM employees
+            WHERE salary &gt;</span><span class="green">(SELECT AVG(salary) FROM employees);</span>
+          </pre>
+        </div>
+        <div class="query-box">
+          <h2>نتيجة الاستعلام</h2>
+          <div class="result">
+            <p>John Doe</p>
+            <p>Jane Smith</p>
+            <p>Michael Johnson</p>
+          </div>
+        </div>
+      </div>
+      <h1>المعاملات اللوجيكية AND و OR</h1>
+      <div class="container">
+        <div class="query-box">
+          <h2>الشرح</h2>
+          <p>تستخدم المعاملات اللوجيكية AND و OR للتحقق من شروط متعددة في استعلام واحد:</p>
+          <pre>
+    SELECT *
+    FROM employees
+    WHERE department = 'HR' AND salary &gt; 5000;
+          </pre>
+        </div>
+        <div class="query-box">
+          <h2>نتيجة الاستعلام</h2>
+          <div class="result">
+           <span>
+   سيعرق الHR المرتباتهم اقل من 5000
+           </span>
+          </div>
+        </div>
+      </div>
+    
+      <h1>المعاملات IN و ANY و ALL</h1>
+      <div class="container">
+        <div class="query-box">
+          <h2>الشرح</h2>
+          <p>تستخدم المعاملات IN و ANY و ALL للتحقق من مطابقة قيمة مع قائمة قيم أو معاملة مع جميع القيم أو أي منها:</p>
+          <pre>
+    SELECT *
+    FROM employees
+    WHERE department_id IN (10, 20, 30);
+          </pre>
+        </div>
+        <div class="query-box">
+          <h2>نتيجة الاستعلام</h2>
+          <div class="result">
+            <span>سيعرض جميع النتائج الموجودة في اي من هذه الاقسام </span>
+          </div>
+        </div>
+      </div>
+      <h1>الفرق بين WHERE و HAVING في SQL</h1>
+      <table>
+        <tr>
+          <th>العبارة</th>
+          <th>الوصف</th>
+          <th>المثال</th>
+        </tr>
+        <tr>
+          <td>WHERE</td>
+          <td>يُستخدم لتصفية الصفوف قبل تجميع البيانات (Aggregate). يتم تطبيقه قبل تجميع البيانات (Aggregate).</td>
+          <td>SELECT employee_id, first_name, salary FROM employees WHERE salary &gt; 5000;</td>
+        </tr>
+        <tr>
+          <td>HAVING</td>
+          <td>يُستخدم لتصفية الصفوف بعد تجميع البيانات (Aggregate). يُستخدم مع عبارات التجميع مثل SUM و AVG وغيرها.</td>
+          <td>SELECT department_id, AVG(salary) AS avg_salary FROM employees GROUP BY department_id HAVING AVG(salary) &gt; 5000;</td>
+        </tr>
+      </table>
+      <h1>متى يُستخدم عبارة GROUP BY في SQL</h1>
+      <p>عبارة "GROUP BY" تُستخدم عندما نحتاج إلى تجميع الصفوف بناءً على قيم مشتركة في أحد الأعمدة. يُفيد ذلك في حالات تحتاج فيها إلى تجميع البيانات للحصول على نتائج مجمعة.</p>
+      <p>مثال على استخدام "GROUP BY":</p>
+      <div class="example">
+        <p>لنفترض أن لدينا جدول يحتوي على بيانات الموظفين وأقسامهم ورواتبهم:</p>
+        <table>
+          <tr>
+            <th>الموظف</th>
+            <th>القسم</th>
+            <th>الراتب</th>
+          </tr>
+          <tr>
+            <td>أحمد</td>
+            <td>المبيعات</td>
+            <td>5000</td>
+          </tr>
+          <tr>
+            <td>محمد</td>
+            <td>المبيعات</td>
+            <td>6000</td>
+          </tr>
+          <tr>
+            <td>ليلى</td>
+            <td>المحاسبة</td>
+            <td>4500</td>
+          </tr>
+          <tr>
+            <td>نور</td>
+            <td>المحاسبة</td>
+            <td>5200</td>
+          </tr>
+        </table>
+        <p>إذاً، إذا أردنا حساب متوسط رواتب الموظفين في كل قسم، يمكننا استخدام "GROUP BY" كالتالي:</p>
+        <pre>
+    SELECT department, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department;</pre>
+      </div>
+    <span>
+        كنتيجة لهذه التعليمة سيعرض المتوسط الحسابي وعرضهم دون تكرار بناء على اسم العمل
+    </span>
+    <table>
+        <tr>
+          <th>القسم</th>
+          <th>الراتب</th>
+        </tr>
+        <tr>
+          <td>المبيعات</td>
+          <td>5500</td>
+        </tr>
+        <tr>
+          <td>المحاسبة</td>
+          <td>4850</td>
+        </tr>
+    </table>
+    <div class="container">
+        <div class="query-box">
+            <p>
+                لدينا جدول يحتوي على بيانات الموظفين ورواتبهم وعمرهم، ونريد حساب مجموع <br>
+                رواتب الموظفين الذين يعملون في إحدى المهن المحددة (مدير أو محاسب) ومتوسط اعمارهم أكبر من عمر محدد (30 عامًا) ومجموع رواتبهم اكبر من 100000 
+            </p>
+    <pre>
+        SELECT job_title, 
+       SUM(salary) AS total_salary, 
+       AVG(age) AS average_age
+       FROM employees
+       WHERE job_title IN ('مدير', 'محاسب')
+       GROUP BY job_title
+       HAVING SUM(salary) > 100000 OR AVG(age) > 30
+    </pre>
+    <span>AS :  لتسمية متحول يحوي ناتج التابع </span>
+    <span>average_age = AVG(age)</span>
+        </div>
+    </div>
+</body>
+</html>

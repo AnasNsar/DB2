@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Test Page</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p>
+                    ماالخطأ في هاذه المناقلة <br>
+                    <code>
+                        <span>T1</span>
+                        read_item(X);
+                        X := X - N;
+                        write_item(X);
+                        <span>T2</span>
+                        read_item(X);
+                        X := X + M;
+                        write_item(X);
+                        <span>T1</span>
+                        read_item(Y);
+                        rollback
+                    </code>
+                    <br>
+                </p>
+                <label>
+                    <input type="radio" name="q3" value="Venus">
+                عالقرآءة الغير مكررة   
+               </label>
+                <label>
+                    <input type="radio" name="q3" value="Jupiter">
+               مشكلة القرآءة القذرة
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Mars">
+                   التعديل الشبح
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Earth">
+                   مشكلة التلخيص الغير صحيح
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>
+                    ما عمل الكود  التالي <br>
+                    <code>
+                        CREATE OR REPLACE TYPE Address_TY AS OBJECT (<br>
+ Street VARCHAR2(50),<br>
+ City VARCHAR2(30),<Br>
+ State VARCHAR2(2),<BR>
+ Zip_code VARCHAR2(10)<Br>
+)<Br>
+CREATE TYPE Address_NT AS TABLE OF Address_TY<br>
+CREATE TABLE Person (<br>
+ name VARCHAR2(25),<Br>
+ address Address_NT<Br>
+)<Br>
+NESTED TABLE address STORE AS address_nt_tab;
+                    </code><br>
+                </p>
+                <label>
+                    <input type="radio" name="q3" value="Venus">
+                عمل جدولين منفصلين
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Jupiter">
+                   عمل جدولين متشابها بالصفات مع اضافة حقول جديدة
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Mars">
+                    عمل جدول يحوي كل حقول الجدولين
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Earth">
+                    عمل جدول احد حقوله الجدول الأخر
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+               </div>
+               <div class="question">
+                <p> اي من الكلمات التالية تدل على قسم التصريحات</p>
+                <label>
+                    <input type="radio" name="q1" value="Paris">
+                    DECLARE
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="London">
+                    bigin
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Berlin">
+                    end
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Rome">
+                    exaption
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+            <div class="question">
+                <p> اي من  الأكواد التالية صحيح </p>
+                <label>
+                    <input type="radio" name="q2" value="3">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET City = 'HART'<br>
+                WHERE City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="4">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C..Address.City = 'HART'<br>
+                WHERE C..Address.City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="5">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C.Person.Address.City = 'HART'<br>
+                WHERE C.Person.Address.City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="6">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C.Person.City = 'HART'<br>
+                WHERE C.Person.City = 'BRIANT';
+                    </code>
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+            <button type="button" id="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

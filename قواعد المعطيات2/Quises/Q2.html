@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Test Page</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p> اي من الكلمات التالية تستخدم  للتعريف عن نمط مجرد</p>
+                <label>
+                    <input type="radio" name="q1" value="Paris">
+                    CREATE  
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="London">
+                    CREATE TYPE 
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Berlin">
+                    CREATE var 
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Rome">
+                    DECLARE
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p> اي من  الأكواد التالية صحيح </p>
+                <label>
+                    <input type="radio" name="q2" value="3">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET City = 'HART'<br>
+                WHERE City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="4">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C..Address.City = 'HART'<br>
+                WHERE C..Address.City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="5">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C.Person.Address.City = 'HART'<br>
+                WHERE C.Person.Address.City = 'BRIANT';
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="6">
+                    <code>
+                        UPDATE CUSTOMER C<br>
+                 SET C.Person.City = 'HART'<br>
+                WHERE C.Person.City = 'BRIANT';
+                    </code>
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>
+                    ماخرج الكود  التالي <br>
+                    <code>
+                        SELECT C.Person.Name, C.Person.Address.City
+                 FROM CUSTOMER C<br>
+                WHERE C.Person.Address.City LIKE '%F%';
+                    </code>
+                </p>
+                <label>
+                    <input type="radio" name="q3" value="Venus">
+                    F
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Jupiter">
+                    الكلمات التي تبدأ بحرف F
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Mars">
+                   الكلمات التي تنتهي بحرف F
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Earth">
+                    الكلمات التي تحتوي حرف F
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <button type="button" id="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

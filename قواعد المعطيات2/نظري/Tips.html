@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips</title>
+    <style>
+         * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            width: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 30px;
+        }
+
+        ol {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        li:hover {
+            background-color: #1a237e;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .Quastion {
+            font-size: 18px;
+            font-weight: bold;
+            color: #512da8;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        /* Animation for list items */
+        li {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-in-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        بعض النصائح اثناء التعامل مع ورقة الأمتحان 
+    </h1>
+    <ol>
+        <li>
+            قرائة السؤوال بعناية بشكل كامل قبل البدء في الحل 
+        </li>
+       <li> 
+        اعادة قراءة السؤوال مرة ثانية مع تركيز بطلبات طلب ورا طلب 
+       </li>
+       <li>
+        بعد قرائة الطلب حله من التفاصيل الصغيرة وصولا للطلب كاملا 
+       </li>
+        <p class="Quastion">مثال لو طلب منا كتابة كود تعديل رواتب الاشخاص الذين تجاوزت سنوات خدمتهم 10 سنوات </p>
+        <p> نبدء بالحل من سنوات خدمة الأشخاص ثم ننتقل لكيفية تعديل على رواتبهم </p>
+        <p> نكتب الحل بشكل بسيط على المسودة ولتحقق منه قبل نقله الى ورقة الأجوبة </p>
+        <p> بعد الإنتهاء من الحل اذا وجدت شئ لاتعرفه اتركه لنهاية الوقت </p>
+        <p> اخيرا راجع السؤوال بشكل سريع ونتقل للطلب الذي يليه </p>
+        <li> اذا ذكر في الطلب  حسب رقم او حسب اسم  او مجمع هذا يعني يجب استعمال التابع GROUP BY</li>
+        <li>الملخص وحده لايكفي  مناسب للمراجعة نعم للدراسة السريعة لاكن لضمان جميع الحالات يجب التركيز على محاضرات العملي ولنظري</li>
+    </ol>
+</body>
+</html>

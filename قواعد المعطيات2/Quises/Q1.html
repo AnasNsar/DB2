@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Test Page</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p> اي من الكلمات التالية تدل على قسم التصريحات</p>
+                <label>
+                    <input type="radio" name="q1" value="Paris">
+                    DECLARE
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="London">
+                    bigin
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Berlin">
+                    end
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Rome">
+                    exaption
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p> اي من  الأكواد التالية صحيح </p>
+                <label>
+                    <input type="radio" name="q2" value="3">
+                    <code>
+                        For radius IN 1..7 LOOP<br>
+                        area:=pi*power(radius,2);<Br>
+                        Insert INTO areas values (radius , area);<Br>
+                        End LOOP;
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="4">
+                    <code>
+                        For radius  1..7 LOOP<br>
+                        area:=pi*power(radius,2);<Br>
+                        Insert INTO areas values (radius , area);<Br>
+                        End LOOP;
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="5">
+                    <code>
+                        For radius IN 1..7 LOOP<br>
+                        area:=pi*power(radius,2);<Br>
+                        Insert INTO areas values (radius , area);<Br>
+                    </code>
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="6">
+                    <code>
+                        For radius IN 1..7<br>
+                        area:=pi*power(radius,2);<Br>
+                        Insert INTO areas values (radius , area);<Br>
+                        End LOOP;
+                    </code>
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>
+                    ماخرج الكود  التالي <br>
+                    <code>
+                        Case I <br>
+                        WHEN 1 THen DBMS_OUTPUT.PUT_LINE('one');<br>
+                        WHEN 2 THen DBMS_OUTPUT.PUT_LINE('two');<br>
+                        WHEN 3 THen DBMS_OUTPUT.PUT_LINE('three');<br>
+                        Else DBMS_OUTPUT.PUT_LINE('ERORR');<br>
+                        End case;
+                    </code><br>
+                    بفرض ان I=2
+                </p>
+                <label>
+                    <input type="radio" name="q3" value="Venus">
+                    one
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Jupiter">
+                    two
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Mars">
+                    three
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Earth">
+                    ERORR
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <button type="button" id="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

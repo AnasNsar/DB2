@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leacture1</title>
+    <link rel="stylesheet" href="stylelec.css">
+</head>
+<body>
+    <section class="main-section" id="lecture1">
+        <header>الصفوف المجردة</header>
+        <article>
+          <p>
+            يعرف الصف المجرد كنوع بينات جديد من المستخدم
+          </p>
+
+          <p>
+           تحوي على طرائق تسمح بمعالجة الأغراض من النمط
+          </p>
+          <ul>
+            <li>
+             <code>
+                CREATE TYPE ADDRESS_TY AS OBJECT<br>
+                (<br>
+                 street VARCHAR2(50),<Br>
+                 city VARCHAR2(25),<br>
+                 state CHAR(2),<br>
+                 zip NUMBER<Br>
+                ) 
+             </code>
+            </li>
+            <li>
+            النمط ليس جدول اي انه لايمكن ادخال البيانات بشكل مباشر 
+            </li>
+            <li>
+               طريقة استخدام الجدول لتعريف نمط بيانات
+              </li>
+              <li><code>
+                CREATE TABLE PERSON (,<br>
+ name VARCHAR2(25),<Br>
+ address ADDRESS_TY<br>
+);</code>
+              </li>
+          </ul>
+          <p>
+          يمكن ايضا تعريف نمط اخر من وبه بيانات من نوع نمط بيانات اخر 
+          </p>
+          <code>
+            CREATE TYPE PERSON_TY AS OBJECT
+(
+ name VARCHAR2(25),
+ address ADDRESS_TY
+)
+          </code>
+          <p id="Var">
+        ويمكن تعريف جدول من نوع المعطيات المجرد
+          </p>
+          <code>
+            CREATE TABLE PERSON (<br>
+ name VARCHAR2(25),<br>
+ address ADDRESS_TY<br>
+);
+          </code>
+          <p>
+             لإجاد اعمدة من جدول معين 
+          </p>
+          <code>
+            SELECT column_name, data_type<br>
+ FROM USER_TAB_COLUMNS><br>
+WHERE table_name = 'CUSTOMER';
+          </code>
+          <p>
+            لإدراج عناصر في عاكود نمط مجرد
+          </p>
+          <code>
+            INSERT INTO CUSTOMER VALUES
+(1,<br>
+ PERSON_TY('John Smith',<Br>
+ ADDRESS_TY('57 PLEASANET ST', 'FINN','NH',11111)));
+          </code>
+          <p>
+            ولإستدعائها 
+          </p>
+          <code>
+            SELECT customer_ID<br>
+ FROM CUSTOMER;
+          </code>
+          <p>للتعديل على البيانات</p>
+          <code>
+            UPDATE CUSTOMER C <br>
+ SET C.Person.Address.City = 'HART'<Br>
+WHERE C.Person.Address.City = 'BRIANT';<br>
+          </code>
+          <p>للتصريح عن طريقة في النمط</p>
+          <code>
+            CREATE OR REPLACE TYPE person_type AS OBJECT<br>
+(<br>
+ first_name VARCHAR2 (30),<br>
+ last_name VARCHAR2 (30),<br>
+ phone_number VARCHAR2(20),<br>
+ date_of_birth DATE,<br>
+ MEMBER FUNCTION name_and_phone RETURN VARCHAR2,<br>
+ MEMBER FUNCTION ageOnDate(onDate DATE) RETURN INTEGER<br>
+)
+          </code>
+          <p> للتعريف ولتعامل  مع الطريقة في جسم البرنامج</p>
+          <code>
+            CREATE OR REPLACE TYPE BODY person_type AS
+MEMBER FUNCTION name_and_phone RETURN VARCHAR2 IS<br>
+BEGIN<Br>
+ RETURN (SELF.first_name||' '||SELF.last_name||' Phone: '
+ ||SELF.phone_number);<br>
+END name_and_phone;<br>
+MEMBER FUNCTION ageOnDate(onDate DATE) RETURN INTEGER IS<br>
+BEGIN<br>
+ RETURN MONTHS_BETWEEN(onDate,SELF.date_of_birth)/12;<br>
+END ageOnDate;<br>
+END;<br>
+          </code>
+          <p>
+            لإستدعائها
+          </p>
+          <code>
+            SELECT p.name_and_phone(), p.ageOnDate(current_date)<br>
+            FROM person p;
+          </code>
+          <p> الوراثة : تسمح بنقل معطيات من الأب ليستخدمها الأبن </p>
+           <code>
+            CREATE TYPE Person AS OBJECT (<br>
+ name VARCHAR2(20),<br>
+ address VARCHAR2(20)<br>
+) NOT FINAL<br>
+CREATE TYPE Student UNDER Person (<br>
+ degree VARCHAR2(20),<Br>
+ department VARCHAR2(20)<br>
+)<br>
+CREATE TYPE Teacher UNDER Person (<br>
+ salary INTEGER,<Br>
+ department VARCHAR2(20)<br>
+)
+           </code>
+           <p>المجمعات لها نوعان :</p>
+           <ul>
+            <li>المصفوفات المتغيرة </li>
+            <li>الجداول المتداخلة</li>
+           </ul>
+           <p>المصفوفات المتغيرة</p>
+           <code>
+            CREATE TABLE Borrower (<br>
+ name VARCHAR2(25),<br>
+ tool VARCHAR2(25),<br>
+ CONSTRAINT borrower_pk PRIMARY KEY (name, tool)<br>
+);
+           </code>
+           <p>إدخال البيانات لها </p>
+           <code>
+            INSERT INTO BORROWER VALUES<br>
+('Jed Hopkins', TOOLS_VA('Shovel', 'Axe', 'Hammer'));<br>
+INSERT INTO BORROWER VALUES<br>
+('John Smith', TOOLS_VA('Shovel', 'Saw'));
+           </code>
+           <p>للتعديل على مصفوفة متغيرة </p>
+           <code>
+            DECLARE<br>
+ var_tools_va TOOLS_VA;<br>
+BEGIN<br>
+ SELECT tools<br>
+ INTO var_tools_va<br>
+ FROM borrower<br>
+ WHERE name = 'Jed Hopkins';<br>
+ var_tools_va.EXTEND;<br>
+ var_tools_va(var_tools_va.LAST) := 'Saw';<Br>
+ var_tools_va(1) := 'Axe';<br>
+ var_tools_va(2) := 'Shovel';<br>
+ UPDATE borrower SET tools = var_tools_va<br>
+ WHERE name = 'Jed Hopkins';<Br>
+END;
+           </code>
+        </article>
+        <article>
+            <h2>الخلاصة</h2>
+            <ul>
+                <li>
+                    <p>النمط المجرد هو نمط جديد لأستخدمه بامور مختلفة في البرنامج</p>
+                    <p><span>CREATE Table</span>للتصريح عن النمط  نضع الكلمة المحجوزة </p>
+                    <p>اسم النمط اي اسم تريده </p>
+                    <p>الكلمة المحجوزة<span>AS OBJECT</span></p>
+                    <p> ونضع الأقواص ولحقول التي نريدها </p>
+                    <p>يمكن استخدام النمط الجديد للتصريح عن جدول او نمط جديد </p>
+                    <p> الإدراج ولتعديل ولأستعلام مشابه للحالة العادية فقط نضع اسم النمط  قبل القيم </p>
+                </li>
+                <li>
+                    <p> الطرق تكون ضمن الأنماط وتستخدم لعمل شئ ما مثل طباعة قيم النمط او  لحساب وقت الخ...</p>
+                    <p>تعريف النمط على الشكل التالي</p>
+                    <p><span>MEMBER FUNCTION </span>اسم الطريقة اي اسم <span>RETURN</span>نوع البيانات المراد اعادته</p>
+                    <p>هذا للتعريف عن الطريقة الأن لدينا طريقة بهذا الأسم لكن لا تعمل لأضافة جسمها </p> 
+                    <p>يكون بذكر السطر السابق مضاف اليه الكلمة <span>Is</span></p>
+                    <p> ومن ثم كتابة برنامج الطريقة مثل اي برنامج عادي</p>
+                    <p>عند استدعائها نضع اسمها ووقوصان </p>
+                </li>
+                <li>
+                    <p>الوراثة والمصفوفات المتغيرة</p>
+                    <p> للوراثة نضيف للتعريف العادي للنمط الكملة <spa>UNDER</spa> اسم النمط الذي سنرث منه </p>
+                    <p> المصفوفات المتغيرة </p>
+                    <p>لا فرقات جوهرية الا اثناء الأستخدام </p>
+                </li>
+                <li>
+                    <p>%F%</p>
+                    <p> تعني كلمة تحوي حرف F</p>
+                    <p>%F</p>
+                    <p> تعني كلمة تنتهي بحرف F</p>
+                    <p>F%</p>
+                    <p>تعني كلمة تبدأ بحرف F</p>
+                </li>
+            </ul>
+        </article>
+      </section>
+</body>
+</html>

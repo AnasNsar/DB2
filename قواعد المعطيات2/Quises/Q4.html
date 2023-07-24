@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Test Page</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p>المناقلات تكون اثناء </p>
+                <label>
+                    <input type="radio" name="q1" value="Paris">
+                    عمليات معا
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="London">
+                 عمليات في اوقات مختلفة
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Berlin">
+                    عملية واحدة
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="Rome">
+                  عملية واحدة تتكرر
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+
+            <div class="question">
+                <p> اي من التعليمات التالية تستخدم للتراجع عن تعديلات المناقلة</p>
+                <label>
+                    <input type="radio" name="q2" value="3">
+                    COMMIT
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="4">
+                   ROLLBACK
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="5">
+                  UNDO
+                </label>
+                <label>
+                    <input type="radio" name="q2" value="6">
+                    REDO
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+            <div class="question">
+                <p>
+                    ماالخطأ في هاذه المناقلة <br>
+                    <code>
+                        <span>T1</span>
+                        read_item(X);
+                        X := X - N;
+                        write_item(X);
+                        <span>T2</span>
+                        read_item(X);
+                        X := X + M;
+                        write_item(X);
+                        <span>T1</span>
+                        read_item(Y);
+                        rollback
+                    </code>
+                    <br>
+                </p>
+                <label>
+                    <input type="radio" name="q3" value="Venus">
+                عالقرآءة الغير مكررة   
+               </label>
+                <label>
+                    <input type="radio" name="q3" value="Jupiter">
+               مشكلة القرآءة القذرة
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Mars">
+                   التعديل الشبح
+                </label>
+                <label>
+                    <input type="radio" name="q3" value="Earth">
+                   مشكلة التلخيص الغير صحيح
+                </label>
+                <div class="tooltip">
+                    <span class="tooltiptext">This is the correct answer!</span>
+                </div>
+            </div>
+            <button type="button" id="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

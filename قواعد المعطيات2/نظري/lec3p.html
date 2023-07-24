@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lecture1</title>
+    <link rel="stylesheet" href="stylelecp.css">
+</head>
+<body>
+    <section class="main-section">
+        <article class="article">
+    <code>
+        DECLARE<br>
+        CURSOR cur IS (SELECT ename, sal FROM emp WHERE deptno = 10);<br>
+        rec_var cur%ROWTYPE;<br>
+       BEGIN<br>
+        FOR rec_var IN cur LOOP<br>
+        DBMS_OUTPUT.PUT_LINE(rec_var.ename);<br>
+        END LOOP;<br>
+       END;<br>
+       BEGIN<br>
+        FOR rec_var IN<Br>
+        (SELECT ename, sal FROM emp WHERE deptno = 10)<br>
+        LOOP<br>
+        DBMS_OUTPUT.PUT_LINE(rec_var.ename);<br>
+        END LOOP;<br>
+       END
+    </code>
+    <hr>
+</article>
+    <article class="article">
+    <code>
+        DECLARE<br>
+ CURSOR emp_cur IS<Br>
+ SELECT ename, sal FROM emp;<br>
+ emp_rec emp_cur%ROWTYPE;<Br>
+BEGIN<Br>
+ OPEN emp_cur;<br>
+ LOOP<Br>
+ FETCH emp_cur INTO emp_rec;<br>
+ EXIT WHEN emp_cur%NOTFOUND;<br>
+ DBMS_OUTPUT.PUT_LINE(emp_rec.ename||', '||emp_rec.sal);<br>
+ END LOOP;<Br>
+ CLOSE emp_cur;<Br>
+END;
+    </code>
+    <hr>
+    <code>
+        DECLARE<br>
+        CURSOR emp_cur(dno NUMBER) IS<br>
+        SELECT ename, sal FROM emp WHERE deptno = dno;<br>
+        emp_rec emp_cur%ROWTYPE;<Br>
+        d dept.deptno%TYPE;<br>
+       BEGIN<br>
+        SELECT deptno INTO d<br>
+        FROM dept WHERE DNAME = 'SALES';<br>
+        OPEN emp_cur(d);<br>
+        LOOP<br>
+        FETCH emp_cur INTO emp_rec;<br>
+        EXIT WHEN emp_cur%NOTFOUND;<br>
+        DBMS_OUTPUT.PUT_LINE(emp_rec.ename||', '||emp_rec.sal);<br>
+        END LOOP;<br>
+        CLOSE emp_cur;<br>
+       END;
+    </code>
+    <hr>
+    <code>
+        DECLARE<br>
+        CURSOR a IS<Br>
+        SELECT ename FROM emp WHERE deptno = 10<br>
+        FOR UPDATE;<Br>
+        a_var a%ROWTYPE;<br>
+       BEGIN<br>
+        OPEN a;<Br>
+        FETCH a INTO a_var;<br>
+        WHILE a%FOUND LOOP<br>
+        DBMS_OUTPUT.PUT_LINE(a_var.ename);<br>
+        FETCH a INTO a_var;<br>
+        END LOOP;<Br>
+        CLOSE a;<Br>
+       END;
+    </code>
+    <hr>
+    <code>
+        DECLARE<br>
+        CURSOR a IS<br>
+        SELECT ename, sal FROM emp WHERE deptno = 10<br>
+        FOR UPDATE;<br>
+        a_var a%ROWTYPE;<br>
+       BEGIN<Br>
+        OPEN a;<Br>
+        FETCH a INTO a_var;<br>
+        WHILE a%FOUND LOOP<Br>
+        DBMS_OUTPUT.PUT_LINE(a_var.ename||' '||a_var.sal);<br>
+        UPDATE emp SET sal = sal * 1.03<br>
+        WHERE CURRENT OF a;<Br>
+        FETCH a INTO a_var;<br>
+        END LOOP;<br>
+       END;
+    </code>
+</article>
+<article class="article">
+    <code>
+        CREATE OR REPLACE TYPE Address_TY AS OBJECT (<br>
+ Street VARCHAR2(50),<Br>
+ City VARCHAR2(30),<Br>
+ State VARCHAR2(2),<Br>
+ Zip_code VARCHAR2(10)<br>
+)<Br>
+CREATE TYPE Address_NT AS TABLE OF Address_TY<br>
+CREATE TABLE Person (<br>
+ name VARCHAR2(25),<Br>
+ address Address_NT<br>
+)<br>
+NESTED TABLE address STORE AS address_nt_tab;
+    </code>
+    <hr>
+    <code>
+        INSERT INTO Person VALUES<br>
+        ('John Smith',<Br>
+         Address_NT(<br>
+         Address_TY('2145 W. Oak', 'Seattle','WA','98042')<br>
+         )<br>
+        );<Br>
+        INSERT INTO Person VALUES<br>
+        ('Robert Freeman',<Br>
+         Address_NT(<Br>
+         Address_TY('550 Water St.','Jax','FL','32202'),<br>
+         Address_TY('37 Black St.','Detroit','NY','67324')<br>
+         )<Br>
+        );
+    </code>
+    <hr>
+    <code>
+        SELECT NT.Street<br>
+        FROM THE (SELECT address<br>
+         FROM Person<Br>
+         WHERE name = 'John Smith') NT<Br>
+        WHERE NT.City = 'Seattle';<br>
+    </code>
+</article>
+<hr>
+<article>
+    <code>
+        INSERT INTO<br>
+THE (SELECT address<br>
+ FROM Person<Br>
+ WHERE name = 'John Smith')<br>
+VALUES<Br>
+ (Address_TY('21 Writer Sq.','New York','NY','65324'));
+    </code>
+    <hr>
+    <code>
+        INSERT INTO Person VALUES<br>
+        ('Mary Smith',<Br>
+         CAST (<Br>
+         MULTISET(<Br>
+         SELECT *<Br>
+         FROM THE (SELECT Address<br>
+         FROM Person<Br>
+         WHERE name = 'John Smith')<Br>
+         ) AS Address_NT<Br>
+         )<Br>
+        );
+    </code>
+</article>
+<hr>
+<article>
+    <code>
+        SELECT *
+FROM THE ( SELECT address<br>
+ FROM Person<br>
+ WHERE Name = 'Mary Smith');
+    </code>
+</article>
+    </section>
+</body>
+</html>

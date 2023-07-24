@@ -1,0 +1,97 @@
+/* Reset some default browser styles */
+body, h1, h2, p, ul, li, code {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set font and background for the body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+}
+
+/* Style the code elements */
+code {
+  font-family: Consolas, monospace;
+  background-color: #f1f1f1;
+  padding: 2px 5px;
+}
+
+/* Set styles for the header */
+header {
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Set styles for the paragraphs */
+p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Set styles for the unordered lists */
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* Set styles for the list items */
+li {
+  margin-bottom: 10px;
+}
+
+/* Set styles for the main section */
+.main-section {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Set styles for the article section */
+.article {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/* Set styles for the article header */
+.article header {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background-color: #2196F3;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Set styles for the article paragraphs */
+.article p {
+  line-height: 1.6;
+}
+
+/* Set styles for the article code elements */
+.article code {
+  font-family: Consolas, monospace;
+  background-color: #f1f1f1;
+  padding: 2px 5px;
+}
+
+/* Set styles for the article unordered lists */
+.article ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* Set styles for the article list items */
+.article li {
+  margin-bottom: 10px;
+}

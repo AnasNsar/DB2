@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرح المؤشرات الداخلية والخارجية في PL/SQL</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .inner-indicators {
+      background-color: #f2f2f2;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .outer-indicators {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .steps {
+      margin-top: 15px;
+    }
+    .step {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>شرح المؤشرات الداخلية والخارجية في PL/SQL</h1>
+
+  <div class="section">
+    <h2>المؤشرات الداخلية</h2>
+    <div class="inner-indicators">
+      <p>المؤشرات الداخلية هي مؤشرات تستخدم في PL/SQL للتحقق من حالة العمليات داخل الكود. تشمل المؤشرات الداخلية الآتي:</p>
+      <ul>
+        <li><strong>%found:</strong> يتم تعيينها إلى TRUE إذا تم العثور على صف داخل النتائج.</li>
+        <li><strong>%notfound:</strong> يتم تعيينها إلى TRUE إذا لم يتم العثور على صف داخل النتائج.</li>
+        <li><strong>%ROWCOUNT:</strong> تحتوي على عدد الصفوف المتأثرة بالعملية الأخيرة (INSERT، UPDATE، DELETE).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>المؤشرات الخارجية</h2>
+    <div class="outer-indicators">
+      <p>المؤشرات الخارجية هي مؤشرات تُستخدم للتحقق من حالة العمليات خارج كود PL/SQL واستخدامها عادة مع عبارات SELECT INTO لتخزين القيم في متغيرات. تشمل المؤشرات الخارجية الآتي:</p>
+      <ul>
+        <li><strong>مؤشر CURSOR:</strong> تمثل نتائج استعلام SELECT ويتم فتحها وإغلاقها يدويًا.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>مراحل المؤشرات الخارجية</h2>
+    <div class="outer-indicators">
+      <div class="steps">
+        <p class="step">1. <strong>تصريح (Declaration):</strong> يتم تعريف المؤشر في المستوى العالي للبرنامج.</p>
+        <p class="step">2. <strong>فتح (Opening):</strong> يتم فتح المؤشر لتنفيذ الاستعلام.</p>
+        <p class="step">3. <strong>جلب البيانات (Fetching):</strong> يتم استرداد البيانات من المؤشر إلى متغيرات.</p>
+        <p class="step">4. <strong>إغلاق (Closing):</strong> يتم إغلاق المؤشر بعد الانتهاء من عمليات الجلب.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2>مثال عن استدعاء Cursor بدون حلقة</h2>
+    <div class="outer-indicators">
+      <p>في هذا المثال، سنقوم بتعريف Cursor لاسترداد أسماء الموظفين ذوي الرواتب العالية وعمرهم أكبر من 30 عامًا:</p>
+      <pre>
+DECLARE
+  CURSOR high_salary_cursor IS
+    SELECT first_name, last_name
+    FROM employees
+    WHERE salary > 5000 AND age > 30;
+    
+  employee_name employees.first_name%TYPE;
+BEGIN
+  OPEN high_salary_cursor;
+  
+  LOOP
+    FETCH high_salary_cursor INTO employee_name;
+    EXIT WHEN high_salary_cursor%NOTFOUND;
+    
+    -- قم بإجراءات الاستخدام هنا مع المتغير employee_name --
+    
+  END LOOP;
+  
+  CLOSE high_salary_cursor;
+END;
+      </pre>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>مثال عن استدعاء Cursor مع حلقة For</h2>
+    <div class="outer-indicators">
+      <p>في هذا المثال، سنقوم بتعريف Cursor لاسترداد أسماء الموظفين ذوي الرواتب العالية وعمرهم أكبر من 30 عامًا باستخدام حلقة For:</p>
+      <p>الفرق بينهما ان حلقة for لا تحتاج لا فتح ولا سحب ولا اغلاق</p>
+      <pre>
+DECLARE
+  CURSOR high_salary_cursor IS
+    SELECT first_name, last_name
+    FROM employees
+    WHERE salary > 5000 AND age > 30;
+BEGIN
+  FOR employee_rec IN high_salary_cursor LOOP
+    -- قم بإجراءات الاستخدام هنا باستخدام متغيرات employee_rec.first_name و employee_rec.last_name --
+  END LOOP;
+END;
+      </pre>
+    </div>
+  </div>
+</body>
+</html>

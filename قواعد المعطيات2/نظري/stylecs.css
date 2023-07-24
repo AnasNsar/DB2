@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+  }
+
+  .left-side, .right-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+  }
+
+  .left-side {
+    background-color: #00cbff;
+  }
+
+  .right-side {
+    background-color: #fc555f;
+  }
+  a {
+      color: black;
+      text-decoration: none;
+      font-size: 3em;
+      font-weight: bold;
+      font-style: italic;
+
+  }
+  .right-side:hover {
+      background-color: #d0555f;
+      transition: color 0.3s ease;
+  }
+  .left-side:hover {
+      background-color: #00a0ff;
+      transition: color 0.3s ease;
+  }
+  

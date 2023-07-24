@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lecture1</title>
+    <link rel="stylesheet" href="stylelecp.css">
+</head>
+<body>
+    <section class="main-section">
+        <article class="article">
+    <code>
+        CREATE TYPE ADDRESS_TY AS OBJECT<br>
+        (<Br>
+         street VARCHAR2(50),<br>
+         city VARCHAR2(25),<br>
+         state CHAR(2),<Br>
+         zip NUMBER<br>
+        )
+    </code>
+    <hr>
+</article>
+    <article class="article">
+    <code>
+        CREATE TABLE PERSON (<br>
+            name VARCHAR2(25),<br>
+            address ADDRESS_TY<br>
+           );
+    </code>
+    <hr>
+    <code>
+        CREATE TYPE PERSON_TY AS OBJECT<br>
+(<br>
+ name VARCHAR2(25),<br>
+ address ADDRESS_TY<Br>
+)
+    </code>
+    <hr>
+    <code>
+        CREATE TABLE PERSON (<br>
+ name VARCHAR2(25),<br>
+ address ADDRESS_TY<br>
+);
+    </code>
+    <hr>
+    <code>
+        SELECT column_name, data_type<br>
+ FROM USER_TAB_COLUMNS<br>
+WHERE table_name = 'CUSTOMER';
+    </code>
+</article>
+<article class="article">
+    <code>
+        INSERT INTO CUSTOMER VALUES
+(2,<Br>
+ PERSON_TY('Seymour Hester',<br>
+ ADDRESS_TY('1 STEPAHEAD RD', 'BRIANT','NH',11111)));
+    </code>
+    <hr>
+    <code>
+        SELECT C.Person.Name, C.Person.Address.City
+ FROM CUSTOMER C<br>
+WHERE C.Person.Address.City LIKE '%F%';
+    </code>
+    <hr>
+    <code>
+        UPDATE CUSTOMER C<br>
+ SET C.Person.Address.City = 'HART'<br>
+WHERE C.Person.Address.City = 'BRIANT';
+    </code>
+</article>
+<hr>
+<article>
+    <code>
+        CREATE OR REPLACE TYPE person_type AS OBJECT
+ (<br>
+ first_name VARCHAR2 (30),<br>
+ last_name VARCHAR2 (30),<br>
+ phone_number VARCHAR2(20),<br>
+ date_of_birth DATE,<Br>
+ MEMBER FUNCTION name_and_phone RETURN VARCHAR2,<br>
+ MEMBER FUNCTION ageOnDate(onDate DATE) RETURN INTEGER<br>
+)<Br>
+    </code>
+    <hr>
+    <code>
+        CREATE OR REPLACE TYPE BODY person_type AS
+MEMBER FUNCTION name_and_phone RETURN VARCHAR2 IS<br>
+BEGIN<br>
+ RETURN (SELF.first_name||' '||SELF.last_name||' Phone: '
+ ||SELF.phone_number);<br>
+END name_and_phone;<Br>
+MEMBER FUNCTION ageOnDate(onDate DATE) RETURN INTEGER IS<br>
+BEGIN<Br>
+ RETURN MONTHS_BETWEEN(onDate,SELF.date_of_birth)/12;<br>
+END ageOnDate;<br>
+END;
+    </code>
+</article>
+<hr>
+<article>
+    <code>
+        CREATE TYPE Person AS OBJECT ( <br>
+ name VARCHAR2(20),<Br>
+ address VARCHAR2(20)<br>
+)<br>
+CREATE TYPE Student UNDER Person (<br>
+ degree VARCHAR2(20),<br>
+ department VARCHAR2(20)<br>
+)<br>
+CREATE TYPE Teacher UNDER Person (<br>
+ salary INTEGER,<Br>
+ department VARCHAR2(20)<br>
+)
+    </code>
+</article>
+<article>
+    <hr>
+    <code>
+        DECLARE<br>
+ CURSOR borrower_cursor IS<br>
+ SELECT * FROM borrower;<br>
+ borrower_rec borrower_cursor%ROWTYPE;<br>
+BEGIN<br>
+ FOR borrower_rec IN borrower_cursor LOOP<br>
+ DBMS_OUTPUT.PUT_LINE('Borrower Name: '||borrower_rec.name);<br>
+ FOR I IN 1..borrower_rec.tools.COUNT LOOP<br>
+ DBMS_OUTPUT.PUT_LINE(borrower_rec.tools(I));<br>
+ END LOOP;<br>
+ END LOOP;<br>
+END;<br>
+    </code>
+    <hr>
+    <code>
+        DECLARE<br>
+ var_tools_va TOOLS_VA;<br>
+BEGIN<Br>
+ SELECT tools<br>
+ INTO var_tools_va<br>
+ FROM borrower<br>
+ WHERE name = 'Jed Hopkins';<br>
+ var_tools_va.EXTEND;<br>
+ var_tools_va(var_tools_va.LAST) := 'Saw';<br>
+ var_tools_va(1) := 'Axe';<br>
+ var_tools_va(2) := 'Shovel';<br>
+ UPDATE borrower SET tools = var_tools_va<br>
+ WHERE name = 'Jed Hopkins';<br>
+END;
+    </code>
+</article>
+    </section>
+</body>
+</html>

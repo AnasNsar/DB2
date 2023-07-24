@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lecture1</title>
+    <link rel="stylesheet" href="stylelecp.css">
+</head>
+<body>
+    <section class="main-section">
+        <article class="article">
+    <code>
+        DECLARE<br>
+        PI CONSTANT NUMBER(9,7) :=3.1416926;<br>
+        area NUMBER(14,2);
+        CURSOR rad_cursor is <br> Select * From radius_vals;<br>
+        rad_Val rad_cursor%Rowtype;<br>
+        BEGIN <br>
+        Open rad_cursor;<br>
+        Fetch rad_cursor INTO rad_Val;<br>
+        area:= pi*power(rad_Val.radiuse,2);<br>
+        Close rad_cursor;<br>
+        END;
+    </code>
+</article>
+    <article class="article">
+    <code>
+        IF area >30 Then <br>
+        Insert INTO areas values (rad_Val.radius,area);<br>
+        End IF ;
+    </code>
+    <p> سيقوم بفحص المتحول area <br> اذا كان اكبر من 30 سينفذ تعليمة الادخال</p>
+    <code>
+        Case I <br>
+        WHEN 1 THen DBMS_OUTPUT.PUT_LINE('one');<br>
+        WHEN 2 THen DBMS_OUTPUT.PUT_LINE('two');<br>
+        WHEN 3 THen DBMS_OUTPUT.PUT_LINE('three');<br>
+        Else DBMS_OUTPUT.PUT_LINE('ERORR');<br>
+        End case;
+    </code>
+</article>
+<article class="article">
+    <p>
+         سيقوم بفحص المتحول ولتحقق من الحالات الممكنة في حال ننطابق احدها <br>
+         سينفذ التعليمة الخاصة به  والا سيطبع ERORR
+    </p>
+    <ul>
+        <li> LOOP
+            <code>
+            LOOP:<br>
+             area:=pi*power(radius,2);<Br>
+             Insert INTO areas values (radius , area);<Br>
+             radius:=radius+1;<br>
+             Exit WHEN area > 100;<br>
+             End LOOP;
+            </code>
+        </li>
+        <li>For
+            <code>
+                For radius IN 1..7 LOOP<br>
+                area:=pi*power(radius,2);<Br>
+                Insert INTO areas values (radius , area);<Br>
+                End LOOP;
+            </code>
+        </li>
+        <li>While
+            <code>
+                While radius <=7 LOOP <br>
+                area:=pi*power(radius,2);<Br>
+                Insert INTO areas values (radius , area);<Br>
+                radius:=radius+1;<br>
+                End LOOP;
+            </code>
+        </li>
+    </ul>
+</article>
+    </section>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leacture1</title>
+    <link rel="stylesheet" href="stylelec.css">
+</head>
+<body>
+    <section class="main-section" id="lecture1">
+        <header>الجداول المتداخلة</header>
+        <article>
+          <p>
+           تعريف المؤشر في حلقة for
+         </p>
+         <code>
+            DECLARE<br>
+ CURSOR cur IS (SELECT ename, sal FROM emp WHERE deptno = 10);<br>
+ rec_var cur%ROWTYPE;<Br>
+BEGIN<br>
+ FOR rec_var IN cur LOOP<br>
+ DBMS_OUTPUT.PUT_LINE(rec_var.ename);<br>
+ END LOOP;<Br>
+END;<br>
+BEGIN<br>
+ FOR rec_var IN<br>
+ (SELECT ename, sal FROM emp WHERE deptno = 10)<br>
+ LOOP<br>
+ DBMS_OUTPUT.PUT_LINE(rec_var.ename);<br>
+ END LOOP;<br>
+END;
+         </code>
+         <br>
+          <p>
+           استخدام تعليمة Fetch/into مع عدة متحولات
+          </p>
+          <code>
+            DECLARE<br>
+ CURSOR emp_cur IS<br>
+ SELECT ename, sal FROM emp;<br>
+ emp_rec emp_cur%ROWTYPE;<Br>
+BEGIN<br>
+ OPEN emp_cur;<br>
+ LOOP<Br>
+ FETCH emp_cur INTO emp_rec;<br>
+ EXIT WHEN emp_cur%NOTFOUND;<Br>
+ DBMS_OUTPUT.PUT_LINE(emp_rec.ename||', '||emp_rec.sal);<br>
+ END LOOP;<Br>
+ CLOSE emp_cur;<br>
+END;
+          </code>
+          <br>
+          <p>
+          المؤشرات بوسطاء  
+          </p>
+          <code>
+            DECLARE<br>
+ CURSOR emp_cur(dno NUMBER) IS<br>
+ SELECT ename, sal FROM emp WHERE deptno = dno;<br>
+ emp_rec emp_cur%ROWTYPE;<Br>
+ d dept.deptno%TYPE;<br>
+BEGIN<Br>
+ SELECT deptno INTO d<br>
+ FROM dept WHERE DNAME = 'SALES';<br>
+ OPEN emp_cur(d);<br>
+ LOOP<br>
+ FETCH emp_cur INTO emp_rec;<Br>
+ EXIT WHEN emp_cur%NOTFOUND;<Br>
+ DBMS_OUTPUT.PUT_LINE(emp_rec.ename||', '||emp_rec.sal);<br>
+ END LOOP;<br>
+ CLOSE emp_cur;<br>
+END;
+          </code>
+          <br>
+          <p>
+            يمكن قفل سجلات بستخدام تعليمة for Update
+          </p>
+          <p>
+            لايمكن لمستخدم اخر تعديل على هذه السجلات حتى يتم اغلاق المؤشر او بستخدام تعليمات التثبيت
+          </p>
+          <ul>
+            <li>
+                <span>
+                    COMMIT
+                </span>
+                :تثبيت التغيرات ولايمكن التراجع بعدها عن التغيرات
+            </li>
+            <li>
+                <span>
+                    ROLLBACK
+                </span>
+                : التراجع عن عمل قمت به قبل تثبيته 
+            </li>
+          </ul>
+          <code>
+            CURSOR cur IS تعليمة ال select <span>FOR UPDATE</span>
+          </code>
+          <p>
+           عند  احضار السجلات  من المؤشر يتم وضع اشارة على السجل الحالي للتعديل على هذا السجل نستخدم  
+         </p>
+         <p><span>CURRENT OF</span>يمكن ان تستخدم بعد تعليمتي <span>(Update , Delete)</span></p>
+          <code>
+            UPDATE اسم الجدول SET اسم الحقل  = <span>القيمة</span> 
+                WHERE CURRENT OF اسم المؤشر;
+          </code>
+          <p>
+           الجداول المتداخلة 
+          </p>
+          <code>
+            CREATE OR REPLACE TYPE Address_TY AS OBJECT (<br>
+                Street VARCHAR2(50),<Br>
+                City VARCHAR2(30),<Br>
+                State VARCHAR2(2),<br>
+                Zip_code VARCHAR2(10)<br>
+               )<br>
+               CREATE TYPE Address_NT AS TABLE OF Address_TY<br>
+               CREATE TABLE Person (<br>
+                name VARCHAR2(25),<br>
+                address Address_NT<br>
+               )<br>
+               NESTED TABLE address STORE AS address_nt_tab<br>
+               ;
+          </code>
+          <p>
+          لإدراج سطر في جداول المتداخلة   
+          </p>
+          <code>
+            INSERT INTO Person VALUES<br>
+('John Smith',<br>
+ Address_NT(<br>
+ Address_TY('2145 W. Oak', 'Seattle','WA','98042')<br>
+ )<br>
+);<br>
+INSERT INTO Person VALUES<br>
+('Robert Freeman',<br>
+ Address_NT(<br>
+ Address_TY('550 Water St.','Jax','FL','32202'),<br>
+ Address_TY('37 Black St.','Detroit','NY','67324')<br>
+ )<br>
+);
+          </code>
+          <p>للأستعلام على جداول متداخلة</p>
+          <code>
+            SELECT NT.Street
+FROM THE (SELECT address
+ FROM Person<br>
+ WHERE name = 'John Smith') NT<br>
+WHERE NT.City = 'Seattle';
+          </code>
+          <p>استخدام التابع<span>The</span>في ادخال سطر جديد لعنوان شخص سبق ان تم ادخاله</p>
+          <code>
+            INSERT INTO<br>
+            THE (SELECT address
+             FROM Person<br>
+             WHERE name = 'John Smith')<br>
+            VALUES<br>
+             (Address_TY('21 Writer Sq.','New York','NY','65324'));
+          </code>
+          <p>
+            <span> CAST </span> تحول نتيجة الاستفسار الى جدول
+          </p>
+          <p>
+            <span>MULTISET</span>تسمح بإضافة عدة سجلات  للأستفسار 
+          </p>
+            <h2>الخلاصة</h2>
+            <ul>
+                <li>
+                    <p><span>For</span>مع المؤشرات</p>
+                    <p> استخدام حلقة for مع المؤشرات يسهل العمل لأننا نستغني عن </p>
+                    <p><span>Open , Close , Fetch</span></p>
+                    <p>ويمكن استخدام تعليمة Fetch للتعامل مع اكثر من حقل في الجدول مثل اسماء العاملين ورواتبهم </p>
+                </li>
+                <li>
+                    <p>لتجنب اخطاء تعامل مع سجل من مستخدم اخر يمكن قفله</p>
+                    <p>بستخدام التعليمة<span>For Update</span></p>
+                    <p>لفك القفل يكون عن طريق <span>CAST , ROLLBACK</span></p>
+                    <p><span>CAST</span>تثبت التغيرات <span>ROLLBACK</span>تتراجع عن التغيرات</p>
+                </li>
+                <li>
+                    <p> للتعديل السجلات من مؤشر نستخدم <span>CURRENT OF</span>يعدل السجل المؤشر اليه الأن</p>
+                    <p>تستخدم بعد تعليمتي <span>Update , Delete</span></p>
+                </li>
+
+                <li>
+                   <p>
+                     الجداول المتداخلة تكون بإدخال متحول يمثل هذا الجدول في جدول اخر 
+                   </p>
+                   <p> للتصريح عن نوع معطيات جديد  من نوع جدول نضع الكلمة </p>
+                   <span>Table Of  اسم النوع</span>
+                   <p> لتحويل حقل من الجدول  الى جدول داخلي نستخدم</p>
+                   <span>NESTED TABLE </span>
+                    اسم الحقل المراد تحويله الى جدول<span>STORE as</span> الأسم الجديد للجدول الداخلي
+                   <p>لإدراج السجلات نضع اسم الجدول الداخلي قبل اضافة له البيانات</p>
+                   <p>تستخدم التعليمة <span>The</span> للأستعلام او لإدراج السجلات في الجداول المتداخلة</p>
+                </li>
+                <li>
+                    <p><span>CAST</span>تحويل ناتج الاستفسار الى جدول</p>
+                    <p><span>MULTISET</span>تسمح للأستفسارات ان تحوي اكثر من سجل</p>
+                </li>
+            </ul>
+        </article>
+      </section>
+</body>
+</html>

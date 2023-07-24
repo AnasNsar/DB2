@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #acacac;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #container {
+
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: absolute;
+            top: 4%;
+            left: 32%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .link-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #welcome-message {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 208%;
+            height: 50px;
+        }
+
+        #welcome-message p {
+            position: relative;
+            text-align: center;
+            margin: 10px auto;
+            font-size: 1.4em;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .link-item a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .link-item:hover {
+            background-color: #f9f9f9;
+            transform: scale(1.05);
+        }
+
+        /* Add animation for link click */
+        .link-item.clicked {
+            animation: travelAnimation 0.5s;
+        }
+
+        @keyframes travelAnimation {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>اهلا بكم في ملخص قواعد المعطيات 2</h1>
+        <div id="welcome-message">
+            <p> هذا الملخص شامل للمحاضرات العملي </p>
+        </div><br>
+        <div class="link-item"><a href="lecp1.html" onclick="animateLink(event)">محاضرة الأولى</a></div>
+        <div class="link-item"><a href="lecp2.html"  onclick="animateLink(event)">المحاضرة الثانية</a></div>
+        <div class="link-item"><a href="lecp3.html"  onclick="animateLink(event)">المحاضرة الثالثة</a></div>        
+        <div class="link-item"><a href="lecp4.html"  onclick="animateLink(event)">المحاضرة الرابعة</a></div>
+        <div class="link-item"><a href="lecp5.html"  onclick="animateLink(event)">المحاضرة الخامسة</a></div>
+        </div>
+        <script>
+            function animateLink(event) {
+                event.preventDefault(); // Prevent default link behavior
+    
+                const linkItem = event.target.closest('.link-item');
+                linkItem.classList.add('clicked');
+    
+                setTimeout(() => {
+                    window.location.href = event.target.href; // Navigate to the link after the animation
+                }, 500); // Adjust the time (in milliseconds) to match the animation duration
+            }
+        </script>
+    </body>
+    </html>    

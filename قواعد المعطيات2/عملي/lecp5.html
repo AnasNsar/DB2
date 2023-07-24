@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرح المؤشرات الداخلية والخارجية في PL/SQL</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #0066cc;
+      text-align: center;
+    }
+    h2 {
+      color: #009900;
+      margin-bottom: 10px;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .inner-indicators {
+      background-color: #f2f2f2;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .outer-indicators {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    pre {
+      background-color: #eee;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      direction: ltr; /* This is important for Arabic text inside pre tags */
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1> النمط المجرد</h1>
+
+  <div class="section">
+    <h2>انشاء النمط المجرد</h2>
+    <div class="inner-indicators">
+      <p>قد لا يحوي النمط على طرائق</p>
+      <pre>
+        Create type type_name as object (
+Column_name1 datatype,
+Column_name2 datatype,
+Column_name3 datatype,
+      </pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>تعريف الطرائق الخاصة بالنمط</h2>
+    <div class="outer-indicators">
+        <pre>
+            Create or replace type body type_name as
+            Member function اسم الطريقة return نوع بينات العائد من الطريقة is
+        Begin 
+        تعليمات الطريقة
+        End اسم الطريقة ;
+        End ;
+        </pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>استخدام النمط في تعريف الجدول</h2>
+    <div class="outer-indicators">
+    <pre>
+    Create table table_name (
+    Column_name1 datatype,
+    Column_name2 اسم النمط,
+    );
+    </pre>
+    </div>
+  </div>
+  <div class="section">
+    <h2>ادراج البيانات في عامود  من نمط مجرد</h2>
+    <div class="outer-indicators">
+        <p>النمط ليس جدوال فال يمكن إدخال البيانات مباشرة إليه</p>
+    <pre>
+        Insert into table_name
+        values ( value1, type_name(value1,value2,…), … );
+      </pre>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>استخراج البيانات من نمط مجرد</h2>
+    <div class="outer-indicators">
+      <pre>
+        Select table_name . column_name . attribue
+        From table_name
+        Where table_name . column_name . attribute = 'value' ;
+      </pre>
+    </div>
+  </div>
+  <div class="section">
+    <h2>تعديل البيانات في نمط مجرد</h2>
+    <div class="outer-indicators">
+      <pre>
+        Update table_name
+        Set table_name . column_name . attribute = 'value'
+        شرط على أعمدة )واصفات( النمط//
+        Where table_name . column_name . attribute = 'value'
+        أو شرط على أعمدة الجدول//
+        Where table_name . column_name = 'value'
+        أو أي شرط //
+        Where condition ;
+      </pre>
+      <span>التنفيذ العملي للمراجعة متوافر في المحاضرة ال5 عملي</span>
+    </div>
+  </div>
+</body>
+</html>
